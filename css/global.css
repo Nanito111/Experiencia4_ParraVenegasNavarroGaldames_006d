@@ -1,0 +1,60 @@
+@media (max-width: 576px) {
+    .topBarMenu{
+        min-height: 5em;
+    }
+    .nav-item a{
+        font-size: 1.2em;
+    }
+}
+
+*{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.topBarImg{/*imagen de fondo para navbar*/
+    background-image: url(../img/bg_topBar.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.logoImg{
+    max-height: 5em;
+}
+
+.topBarMenu{
+    background-color: #070707;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.footerImg{
+    min-width: 13em;
+    max-width: 16em;
+}
+
+footer{
+    background-color: #100c08
+}
+
+footer li, a {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.502);
+    font-weight: 100;
+}
+
+footer ul {
+    color: rgba(255, 255, 255, 0.75);
+    padding: 0;
+    list-style-type: none;
+}
+footer h5 {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.3em;
+}
+
+footer a:hover{
+    color: #73dd6f;
+}
