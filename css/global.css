@@ -29,3 +29,32 @@
 .navbar-toggler:focus {
     box-shadow: none;
 }
+
+.footerImg{
+    min-width: 13em;
+    max-width: 16em;
+}
+
+footer{
+    background-color: #100c08
+}
+
+footer li, a {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.502);
+    font-weight: 100;
+}
+
+footer ul {
+    color: rgba(255, 255, 255, 0.75);
+    padding: 0;
+    list-style-type: none;
+}
+footer h5 {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.3em;
+}
+
+footer a:hover{
+    color: #73dd6f;
+}
