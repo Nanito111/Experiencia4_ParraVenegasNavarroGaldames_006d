@@ -1,0 +1,51 @@
+/* ----------------L I M I T E S------------------- */
+@media (max-width: 576px) {
+    .carouselImg{ transform: translateX(-70vw);}
+    .carouselText{
+        font-size: 1.4em;
+        bottom: 7vh;
+    }
+    .carouselText h1{font-size: 5vh;}
+}
+@media (min-width: 576px) {
+    .carouselImg{ transform: translateX(-20vw);}
+    .carouselText{
+        font-size: 1.4em;
+        bottom: 7vh;
+    }
+    .carouselText h1{font-size: 3rem;}
+    
+}
+@media (min-width: 768px) {
+    .carouselImg{ transform: translateX(0);}
+    .carouselText{
+        font-size: 1.6rem;
+        bottom: 5vw;
+    }
+    .carouselText h1{font-size: 6vw;}
+    
+}
+
+@media (min-width: 992px) {
+    .carouselText{
+        font-size: 2rem;
+        bottom: 10vw;
+    }
+    .carouselText h1{font-size: 4rem;}
+}
+
+.carouselImg {
+    width: 100%;
+    min-width: 150vh;
+    filter: brightness(60%);
+}
+
+.carouselText{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.carouselText p{
+    font-weight: lighter;
+    color: #b7ff96;
+}

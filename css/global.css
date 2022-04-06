@@ -1,0 +1,31 @@
+@media (max-width: 576px) {
+    .topBarMenu{
+        min-height: 5em;
+    }
+    .nav-item a{
+        font-size: 1.2em;
+    }
+}
+
+*{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.topBarImg{/*imagen de fondo para navbar*/
+    background-image: url(../img/bg_topBar.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.logoImg{
+    max-height: 5em;
+}
+
+.topBarMenu{
+    background-color: #070707;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
