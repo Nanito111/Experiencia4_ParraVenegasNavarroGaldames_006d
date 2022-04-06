@@ -1,0 +1,41 @@
+.topBarImg{/*imagen de fondo para navbar*/
+    background-image: url(../img/bg_topBar.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+.topBarMenu{
+    background-color: #1a1a1a;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.footer{
+    background-color: #261c10;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; color: white;
+}
+.footerImg{
+    width: 12em;
+    margin-bottom: 1.6em;
+    margin-left: 1em;
+    transform: translateY(-50%)
+}
+.imagenes{
+    align-self: center;
+    margin-top: 5em;
+    width: 270px;
+    height: 270px;
+}
+.h1{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+}
+.h5{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+}
+.list{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.list-group-item {
+    border: 0;
+}
