@@ -1,5 +1,6 @@
 <footer class="container-fluid text-white pt-3">
-    <div class="container-lg py-2">
+  {% load static %}
+  <div class="container-lg py-2">
       <div class="row justify-content-center">
         <div class=" col-sm-3 text-center ">
           <ul>
@@ -14,11 +15,10 @@
         <div class=" col-sm-3 text-center">
             <ul>
               <h5 class="mb-3">Mapa del Sitio</h5> 
-              <li><a class="text-decoration-none" href="index.html">Página Principal</a></li>
-              <li><a class="text-decoration-none" href="quienes_somos.html">Quiénes Somos</a></li>
-              <li><a class="text-decoration-none" href="galeria.html">Galería de Fotos</a></li>
-              <li><a class="text-decoration-none" href="contacto.html">Contacto</a></li>
-              <li><a class="text-decoration-none" href="feedback.html">Soporte</a></li>
+              <li><a class="text-decoration-none" href="{% url 'index' %}">Página Principal</a></li>
+              <li><a class="text-decoration-none" href="{% url 'quienes_somos' %}">Quiénes Somos</a></li>
+              <li><a class="text-decoration-none" href="{% url 'galeria' %}">Galería de Fotos</a></li>
+              <li><a class="text-decoration-none" href="{% url 'contacto' %}">Contacto</a></li>
             </ul>
         </div>
 
@@ -39,7 +39,7 @@
 
         <div class="text-center">
           <ul>
-            <li><img src="img/logo.png" class="img-fluid footerImg"></li>
+            <li><img src="{% static 'core/img/logo.png' %}" class="img-fluid footerImg"></li>
             <li>©2022</li>
             <li></li>
             <li></li>
