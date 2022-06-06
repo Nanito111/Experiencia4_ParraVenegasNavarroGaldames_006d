@@ -12,3 +12,6 @@ def galeria(request):
 
 def contacto(request):
     return render(request, 'core/contacto.html')
+
+def soporte(request):
+    return render(request, 'core/soporte.html')
