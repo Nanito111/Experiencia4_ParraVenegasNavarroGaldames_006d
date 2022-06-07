@@ -1,11 +1,9 @@
-from dataclasses import fields
-from urllib.request import Request
-from django.core.serializers import serialize
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from core.forms import *
-from .models import *
 
+from core.models import Contacto
+from .forms import CustomUserCreationForm, UserLoginForm, SoporteForm, ContactoForm
+from django.contrib.auth import authenticate, login as login_auth
+from django.contrib import messages
 
 # Create your views here.
 def index(request):
@@ -18,35 +16,55 @@ def galeria(request):
     return render(request, 'core/galeria.html')
 
 def contacto(request):
-    return render(request, 'core/contacto.html')
+    data = {
+        'form': ContactoForm()
+    }
+    if request.method == 'POST':
+        formulario = ContactoForm(data = request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"] = "Mensaje enviado exitosamente"
+        else:
+            data["form"] = formulario
+    return render(request, 'core/contacto.html', data)
+
 
 def soporte(request):
-    return render(request, 'core/soporte.html')
+    data = {
+        'form': SoporteForm()
+    }
+    if request.method == 'POST':
+        formulario = SoporteForm(data = request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"] = "Mensaje enviado exitosamente"
+        else:
+            data["form"] = formulario
+    return render(request, 'core/soporte.html', data)
 
 def login(request):
-    state = {"error_alert":""}
-    if request.method == 'POST':
-        username = request.POST['usuario']
-        password = request.POST['password']
-        if Cuenta.objects.filter(usuario = username).exist():
-            state['error_alert'] = "SESION LISTA"
-            return render(request, 'core/register.html', state)
-        else:
-            state['error_alert'] = "Usuario o Contraseña Incorrectos"
-            return render(request, 'core/register.html', state)
-
-    return render(request, 'core/login.html', state)
+    data = {
+        'form': UserLoginForm()
+    }
+    return render(request, 'registration/login.html', data)
 
 def register(request):
-    state = {"register_message":""}
+    data = {
+        'form': CustomUserCreationForm()
+    }
+
     if request.method == 'POST':
-        formulario = CuentaForm(request.POST)
-        if formulario.is_valid:
-            username = formulario.data['usuario']
-            if Cuenta.objects.filter(usuario = username).exists():
-                state['register_message'] = "El usuario ya existe"
-                return render(request, 'core/register.html', state)
-            else:
-                formulario.save()
-                return redirect(to="login")
-    return render(request, 'core/register.html', state)
+        formulario = CustomUserCreationForm(data = request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            user = authenticate(username = formulario.cleaned_data["username"], password = formulario.cleaned_data["password1"])
+            login_auth(request, user)
+            messages.success(request, "Te has registrado correctamente")
+            #redigir al home
+            return redirect(to="index")
+        data["form"] = formulario
+
+    return render(request, 'registration/register.html', data)
+
+def account(request):
+    return render(request, 'registration/account.html')

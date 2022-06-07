@@ -19,7 +19,6 @@ $(window).on('load', function() {
   
   // Validación del nombre de usuario
   $("#username").keyup(function() {
-    
     usernameValidation();
     submitValidation();
   });
@@ -86,8 +85,6 @@ $(window).on('load', function() {
       $("#username").addClass('is-invalid');
       $(".username.invalid-feedback").text("El nombre de usuario debe contener entre 3 a 20 caracteres");
     }
-    // Validar si el nombre de usuario ya está en uso
-    
     else {
       $("#username").addClass('is-valid');
     }
@@ -155,6 +152,6 @@ $(window).on('load', function() {
     else{
       $("#submit").removeAttr("disabled");
     }
-  };
+  }
 });
 
