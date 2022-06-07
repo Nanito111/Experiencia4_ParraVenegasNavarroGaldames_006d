@@ -1,57 +1,79 @@
 $(window).on('load', function() {
   // Validación del nombre
-  $("#name").blur(function() {
-    $("#name").removeClass('is-valid');
-    $("#name").removeClass('is-invalid');
-    if ( $("#name").val().match(/^$/g)) {
-      $("#name").addClass('is-invalid');
-      $(".name.invalid-feedback").text("Debes completar este campo");
-    }
-    else if ( $("#name").val().match(/^.{64,}$/g)) {
-      $("#name").addClass('is-invalid');
-      $(".name.invalid-feedback").text("El nombre no puede tener más de 64 caracteres");
-    }
-    else if ($("#name").val().match(/^\S+(?: \S+)*$/g) == null) {
-      $("#name").addClass('is-invalid');
-      $(".name.invalid-feedback").text("El nombre no puede empezar ni terminar con espacios");
-    }
-    else if ($("#name").val().match(/\d+/g) != null) {
-      $("#name").addClass('is-invalid');
-      $(".name.invalid-feedback").text("El nombre no puede contener números");
-    }
-    else {
-      $("#name").addClass('is-valid');
-    }
+  $("#name").keyup(function() {
+    nameValidation("#name", ".name");
+    submitValidation();
+  });
+  $("#name").blur(function () {
+    submitValidation();
   });
 
   // Validación del apellido
-  $("#surname").blur(function() {
-    $("#surname").removeClass('is-valid');
-    $("#surname").removeClass('is-invalid');
-    if ( $("#surname").val().match(/^$/g)) {
-      $("#surname").addClass('is-invalid');
-      $(".surname.invalid-feedback").text("Debes completar este campo");
+  $("#surname").keyup(function() {
+    nameValidation("#surname", ".surname");
+    submitValidation();
+  });
+  $("#surname").blur(function () {
+    submitValidation();
+  });
+  
+  // Validación del nombre de usuario
+  $("#username").keyup(function() {
+    
+    usernameValidation();
+    submitValidation();
+  });
+  $("#username").blur(function () {
+    submitValidation();
+  });
+
+  // Validación del correo electrónico
+  $("#mail").keyup(function() {
+    mailValidation();
+    submitValidation();
+  });
+  $("#mail").blur(function () {
+    submitValidation();
+  });
+
+  // Validación de la contraseña
+  $("#password").keyup(function() {
+    passwordValidation();
+    submitValidation();
+  });
+  $("#password").blur(function () {
+    submitValidation();
+  });
+
+  function nameValidation(idElement, classElement) {
+    $(idElement).removeClass('is-valid');
+    $(idElement).removeClass('is-invalid');
+
+    if ( $(idElement).val().match(/^$/g)) {
+      $(idElement).addClass('is-invalid');
+      $(classElement+".invalid-feedback").text("Debes completar este campo");
     }
-    else if ( $("#surname").val().match(/^.{64,}$/g)) {
-      $("#surname").addClass('is-invalid');
-      $(".surname.invalid-feedback").text("El apellido no puede tener más de 64 caracteres");
+    else if ( $(idElement).val().match(/^.{64,}$/g)) {
+      $(idElement).addClass('is-invalid');
+      $(classElement+".invalid-feedback").text("El nombre no puede tener más de 64 caracteres");
     }
-    else if ($("#surname").val().match(/^\S+(?: \S+)*$/g) == null) {
-      $("#surname").addClass('is-invalid');
-      $(".surname.invalid-feedback").text("El nombre no puede empezar ni terminar con espacios");
+    else if ($(idElement).val().match(/^\S+(?: \S+)*$/g) == null) {
+      $(idElement).addClass('is-invalid');
+      $(classElement+".invalid-feedback").text("El nombre no puede empezar ni terminar con espacios");
     }
-    else if ($("#surname").val().match(/\d+/g) != null) {
-      $("#surname").addClass('is-invalid');
-      $(".surname.invalid-feedback").text("El apellido no puede contener números");
+    else if ($(idElement).val().match(/\d+/g) != null) {
+      $(idElement).addClass('is-invalid');
+      $(classElement+".invalid-feedback").text("El nombre no puede contener números");
     }
     else {
-      $("#surname").addClass('is-valid');
+      $(idElement).addClass('is-valid');
     }
-  });
-  // Validación del nombre de usuario
-  $("#username").blur(function() {
+  }
+
+  function usernameValidation() {
     $("#username").removeClass('is-valid');
     $("#username").removeClass('is-invalid');
+
     if ( $("#username").val().match(/^$/g)) {
       $("#username").addClass('is-invalid');
       $(".username.invalid-feedback").text("Debes completar este campo");
@@ -64,19 +86,17 @@ $(window).on('load', function() {
       $("#username").addClass('is-invalid');
       $(".username.invalid-feedback").text("El nombre de usuario debe contener entre 3 a 20 caracteres");
     }
-
     // Validar si el nombre de usuario ya está en uso
-    
     
     else {
       $("#username").addClass('is-valid');
     }
-  });
+  }
 
-  // Validación del correo electrónico
-  $("#mail").blur(function() {
+  function mailValidation() {
     $("#mail").removeClass('is-valid');
     $("#mail").removeClass('is-invalid');
+
     if ( $("#mail").val().match(/^$/g)) {
       $("#mail").addClass('is-invalid');
       $(".mail.invalid-feedback").text("Debes completar este campo");
@@ -92,10 +112,9 @@ $(window).on('load', function() {
     else {
       $("#mail").addClass('is-valid');
     }
-  });
+  }
 
-  // Validación de la contraseña
-  $("#password").blur(function() {
+  function passwordValidation() {
     $("#password").removeClass('is-valid');
     $("#password").removeClass('is-invalid');
 
@@ -115,6 +134,27 @@ $(window).on('load', function() {
     else {
       $("#password").addClass('is-valid');
     }
-  });
+  }
+
+  function submitValidation () {
+    if (!$("#name").hasClass('is-valid')) {
+      $("#submit").attr("disabled", true);
+    }
+    else if (!$("#surname").hasClass('is-valid')) {
+      $("#submit").attr("disabled", true);
+    }
+    else if (!$("#username").hasClass('is-valid')) {
+      $("#submit").attr("disabled", true);
+    }
+    else if (!$("#mail").hasClass('is-valid')) {
+      $("#submit").attr("disabled", true);
+    }
+    else if (!$("#password").hasClass('is-valid')) {
+      $("#submit").attr("disabled", true);
+    }
+    else{
+      $("#submit").removeAttr("disabled");
+    }
+  };
 });
 
