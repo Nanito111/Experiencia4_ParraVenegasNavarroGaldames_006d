@@ -64,10 +64,7 @@ $(window).on('load', function() {
       $("#username").addClass('is-invalid');
       $(".username.invalid-feedback").text("El nombre de usuario debe contener entre 3 a 20 caracteres");
     }
-
-    // Validar si el nombre de usuario ya está en uso
-    
-    
+    //TODO: Validar si el nombre de usuario ya está en uso
     else {
       $("#username").addClass('is-valid');
     }
@@ -91,29 +88,6 @@ $(window).on('load', function() {
     }
     else {
       $("#mail").addClass('is-valid');
-    }
-  });
-
-  // Validación de la contraseña
-  $("#password").blur(function() {
-    $("#password").removeClass('is-valid');
-    $("#password").removeClass('is-invalid');
-
-    if ( $("#password").val().match(/^$/g)) {
-      $("#password").addClass('is-invalid');
-      $(".password.invalid-feedback").text("Debes completar este campo");
-    }
-
-    else if ($("#password").val().match(/^.{8,}$/g) == null) {
-      $("#password").addClass('is-invalid');
-      $(".password.invalid-feedback").text("La contraseña debe tener al menos 8 caracteres");
-    }
-    else if ($("#password").val().match(/^.{50,}$/g) != null) {
-      $("#password").addClass('is-invalid');
-      $(".password.invalid-feedback").text("La contraseña no puede tener más de 50 caracteres");
-    }
-    else {
-      $("#password").addClass('is-valid');
     }
   });
 });
