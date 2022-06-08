@@ -1,72 +1,44 @@
 from django import forms
-from django.forms import ModelForm, ValidationError
 from .models import *
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
-class CuentaForm(ModelForm):
-    class Meta:
-        model = Cuenta
-        fields = ['usuario', 'nombre', 'apellido','correo','password']
+# class UserRegisterForm(UserCreationForm):
+#     class Meta:
+#         model = User
+#         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
 
 class UserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(UserLoginForm, self).__init__(*args, **kwargs)
     
-    username = UsernameField(widget = forms.TextInput(
-        attrs= {'class': 'form-control',
-                'placeholder': '',
-                'id': 'hello',}))
-    password = forms.CharField(widget=forms.PasswordInput(
-        attrs= {'class': 'form-control',
-                'placeholder': '',
-                'id': 'hi'}))
+    username = forms.CharField(widget = forms.TextInput(attrs = {'class': 'form-control','id': 'username','type':'text'}))
+    password = forms.CharField(widget = forms.PasswordInput(attrs = {'class': 'form-control','id': 'password','type':'password'}))
 
-class CustomUserCreationForm(UserCreationForm):
-    username = UsernameField(min_length=3, max_length=20, label="Nombre de usuario", widget = forms.TextInput(
-        attrs = {'class': 'form-control',
-                 'placeholder': 'juanperez',
-                 'id': 'username',
-                 'onkeyup': 'testing()'}))
-    first_name = forms.CharField(max_length=50, label="Nombre", widget = forms.TextInput(
-        attrs = {'class': 'form-control',
-                 'placeholder': 'Juan',
-                 'id': 'name'}))
-    last_name = forms.CharField(max_length=50, label="Apellido", widget = forms.TextInput(
-        attrs = {'class': 'form-control',
-                 'placeholder': 'Perez',
-                 'id': 'surname'}))
-    email = forms.CharField(max_length=100, label="Correo electrónico", widget = forms.TextInput(
-        attrs = {'class': 'form-control',
-                 'placeholder': 'juan_perez@email.com',
-                 'id': 'mail'}))
-    password1 = forms.CharField(label="Contraseña", widget = forms.PasswordInput(
-        attrs = {'class': 'form-control',
-                 'placeholder': '',
-                 'id': 'password1'}))
-    password2 = forms.CharField(label="Confirmar Contraseña", widget = forms.PasswordInput(
-        attrs = {'class': 'form-control',
-                 'placeholder': '',
-                 'id': 'password2'}))
-    def clean_username(self):
-        username = self.cleaned_data["username"]
-        existe = User.objects.filter(username = username).exists()
-
-        if existe:
-            raise ValidationError("Este nombre ya existe")
-        return username
+class RegisterForm(UserCreationForm):
+    username = forms.CharField(required=True, min_length=3, max_length=21, widget = forms.TextInput(attrs = {'class': 'form-control','id': 'username'}))
+    first_name = forms.CharField(max_length=65, widget = forms.TextInput(attrs = {'class': 'form-control','id': 'first_name'}))
+    last_name = forms.CharField(max_length=65, widget = forms.TextInput(attrs = {'class': 'form-control','id': 'last_name'}))
+    email = forms.CharField(max_length=101, widget = forms.EmailInput(attrs = {'class': 'form-control','id': 'email'}))
+    password1 = forms.CharField(max_length=51, widget = forms.PasswordInput(attrs = {'class': 'form-control','id': 'password1'}))
+    password2 = forms.CharField(max_length=51, widget = forms.PasswordInput(attrs = {'class': 'form-control','id': 'password2'}))
     
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
-    
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for myField in self.fields:
-            self.fields[myField].widget.attrs['class'] = 'form-control'
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+
+    def save(self, commit=True):
+        user = super(RegisterForm, self).save(commit=False)
+        user.username = self.cleaned_data['username']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.email = self.cleaned_data['email']
+        user.password1 = self.cleaned_data['password1']
+
+        if commit:
+            user.save()
         
-        for fieldName in ['username', 'password1', 'password2']:
-            self.fields[fieldName].help_text = None
+        return user
 
 class SoporteForm(forms.ModelForm):
     nombre = forms.CharField(max_length=50, label="Nombre", widget = forms.TextInput(

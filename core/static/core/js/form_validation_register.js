@@ -1,19 +1,13 @@
-$(window).on('load', function() {
+$(document).ready(function() {
   // Validación del nombre
-  $("#name").keyup(function() {
-    nameValidation("#name", ".name");
-    submitValidation();
-  });
-  $("#name").blur(function () {
+  $("#first_name").keyup(function() {
+    nameValidation("#first_name", ".first_name");
     submitValidation();
   });
 
   // Validación del apellido
-  $("#surname").keyup(function() {
-    nameValidation("#surname", ".surname");
-    submitValidation();
-  });
-  $("#surname").blur(function () {
+  $("#last_name").keyup(function() {
+    nameValidation("#last_name", ".last_name");
     submitValidation();
   });
   
@@ -22,25 +16,22 @@ $(window).on('load', function() {
     usernameValidation();
     submitValidation();
   });
-  $("#username").blur(function () {
-    submitValidation();
-  });
 
   // Validación del correo electrónico
-  $("#mail").keyup(function() {
+  $("#email").keyup(function() {
     mailValidation();
-    submitValidation();
-  });
-  $("#mail").blur(function () {
     submitValidation();
   });
 
   // Validación de la contraseña
-  $("#password").keyup(function() {
-    passwordValidation();
+  $("#password1").keyup(function() {
+    password1Validation();
     submitValidation();
   });
-  $("#password").blur(function () {
+
+   // Validación confirmacion de la contraseña
+   $("#password2").keyup(function() {
+    password2Validation();
     submitValidation();
   });
 
@@ -91,62 +82,78 @@ $(window).on('load', function() {
   }
 
   function mailValidation() {
-    $("#mail").removeClass('is-valid');
-    $("#mail").removeClass('is-invalid');
+    $("#email").removeClass('is-valid');
+    $("#email").removeClass('is-invalid');
 
-    if ( $("#mail").val().match(/^$/g)) {
-      $("#mail").addClass('is-invalid');
-      $(".mail.invalid-feedback").text("Debes completar este campo");
+    if ( $("#email").val().match(/^$/g)) {
+      $("#email").addClass('is-invalid');
+      $(".email.invalid-feedback").text("Debes completar este campo");
     }
-    else if ($("#mail").val().match(/^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/g) == null) {
-      $("#mail").addClass('is-invalid');
-      $(".mail.invalid-feedback").text("El correo electrónico no es válido");
+    else if ($("#email").val().match(/^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/g) == null) {
+      $("#email").addClass('is-invalid');
+      $(".email.invalid-feedback").text("El correo electrónico no es válido");
     }
-    else if ($("#mail").val().match(/^.{100,}$/g) != null) {
-      $("#mail").addClass('is-invalid');
-      $(".mail.invalid-feedback").text("El correo no puede tener más de 100 caracteres");
+    else if ($("#email").val().match(/^.{100,}$/g) != null) {
+      $("#email").addClass('is-invalid');
+      $(".email.invalid-feedback").text("El correo no puede tener más de 100 caracteres");
     }
     else {
-      $("#mail").addClass('is-valid');
+      $("#email").addClass('is-valid');
     }
   }
 
-  function passwordValidation() {
-    $("#password").removeClass('is-valid');
-    $("#password").removeClass('is-invalid');
+  function password1Validation() {
+    $("#password1").removeClass('is-valid');
+    $("#password1").removeClass('is-invalid');
 
-    if ( $("#password").val().match(/^$/g)) {
-      $("#password").addClass('is-invalid');
-      $(".password.invalid-feedback").text("Debes completar este campo");
+    if ( $("#password1").val().match(/^$/g)) {
+      $("#password1").addClass('is-invalid');
+      $(".password1.invalid-feedback").text("Debes completar este campo");
     }
 
-    else if ($("#password").val().match(/^.{8,}$/g) == null) {
-      $("#password").addClass('is-invalid');
-      $(".password.invalid-feedback").text("La contraseña debe tener al menos 8 caracteres");
+    else if ($("#password1").val().match(/^.{8,}$/g) == null) {
+      $("#password1").addClass('is-invalid');
+      $(".password1.invalid-feedback").text("La contraseña debe tener al menos 8 caracteres");
     }
-    else if ($("#password").val().match(/^.{50,}$/g) != null) {
-      $("#password").addClass('is-invalid');
-      $(".password.invalid-feedback").text("La contraseña no puede tener más de 50 caracteres");
+    else if ($("#password1").val().match(/^.{50,}$/g) != null) {
+      $("#password1").addClass('is-invalid');
+      $(".password1.invalid-feedback").text("La contraseña no puede tener más de 50 caracteres");
     }
     else {
-      $("#password").addClass('is-valid');
+      $("#password1").addClass('is-valid');
+    }
+  }
+  
+  function password2Validation() {
+    $("#password2").removeClass('is-valid');
+    $("#password2").removeClass('is-invalid');
+
+    if ( $("#password2").val() != $("#password1").val()) {
+      $("#password2").addClass('is-invalid');
+      $(".password2.invalid-feedback").text("La contraseña no es la misma");
+    }
+    else {
+      $("#password2").addClass('is-valid');
     }
   }
 
   function submitValidation () {
-    if (!$("#name").hasClass('is-valid')) {
+    if (!$("#first_name").hasClass('is-valid')) {
       $("#submit").attr("disabled", true);
     }
-    else if (!$("#surname").hasClass('is-valid')) {
+    else if (!$("#last_name").hasClass('is-valid')) {
       $("#submit").attr("disabled", true);
     }
     else if (!$("#username").hasClass('is-valid')) {
       $("#submit").attr("disabled", true);
     }
-    else if (!$("#mail").hasClass('is-valid')) {
+    else if (!$("#email").hasClass('is-valid')) {
       $("#submit").attr("disabled", true);
     }
-    else if (!$("#password").hasClass('is-valid')) {
+    else if (!$("#password1").hasClass('is-valid')) {
+      $("#submit").attr("disabled", true);
+    }
+    else if (!$("#password2").hasClass('is-valid')) {
       $("#submit").attr("disabled", true);
     }
     else{
