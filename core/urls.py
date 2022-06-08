@@ -9,5 +9,7 @@ urlpatterns = [
     path('soporte', soporte, name="soporte"),
     path('login', login, name="login"),
     path('register/', register, name="register"),
-    path('account', account, name="account")
+    path('account', account, name="account"),
+    path('editaccount/<id>/', editaccount, name="editaccount"),
+    path('deleteaccount/<id>/', deleteaccount, name="deleteaccount")
 ]
