@@ -1,13 +1,32 @@
 from django import forms
 from django.forms import ModelForm, ValidationError
 from .models import *
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField, UserChangeForm
 from django.contrib.auth.models import User
 
 class CuentaForm(ModelForm):
+    
     class Meta:
         model = Cuenta
         fields = ['usuario', 'nombre', 'apellido','correo','password']
+    
+    
+
+class UserChangeForm(ModelForm):
+    class Meta:
+        model = User
+        fields = '__all__'
+        exclude = ('username', 'password', 'groups', 'user_permissions', 'is_staff', 'is_active',
+                   'is_superuser', 'last_login', 'date_joined')
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for myField in self.fields:
+            self.fields[myField].widget.attrs['class'] = 'form-control'
+        self.fields["first_name"].label = 'Nombre'
+        self.fields["last_name"].label = 'Apellido'
+        self.fields["email"].label = 'Correo electrónico'
+            
 
 class UserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
@@ -68,6 +87,14 @@ class CustomUserCreationForm(UserCreationForm):
         for fieldName in ['username', 'password1', 'password2']:
             self.fields[fieldName].help_text = None
 
+class EditUserForm(CustomUserCreationForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'password1', 'password2']
+        exclude = ['username']
+
+
+
 class SoporteForm(forms.ModelForm):
     nombre = forms.CharField(max_length=50, label="Nombre", widget = forms.TextInput(
         attrs = {'class': 'form-control',
@@ -120,3 +147,8 @@ class ContactoForm(forms.ModelForm):
     class Meta:
         model = Contacto
         fields = '__all__'
+
+class RemoveForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username',)
