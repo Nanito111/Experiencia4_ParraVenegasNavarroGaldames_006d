@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.models import User
 from core.models import Contacto
-from .forms import CustomUserCreationForm, EditUserForm, UserLoginForm, SoporteForm, ContactoForm, UserChangeForm, RemoveForm
+from .forms import RegisterForm, EditUserForm, UserLoginForm, SoporteForm, ContactoForm, UserChangeForm, RemoveForm
 from django.contrib.auth import authenticate, login as login_auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -46,23 +46,53 @@ def soporte(request):
     return render(request, 'core/soporte.html', data)
 
 def login(request):
-    return render(request, 'registration/login.html')
-
-def register(request):
     data = {
-        'form': CustomUserCreationForm()
+        'form': UserLoginForm(),
+        'mensaje': "AWWA",
     }
 
     if request.method == 'POST':
-        formulario = CustomUserCreationForm(data = request.POST)
+        formulario = UserLoginForm(request.POST)
+        
         if formulario.is_valid():
-            formulario.save()
-            user = authenticate(username = formulario.cleaned_data["username"], password = formulario.cleaned_data["password1"])
-            login_auth(request, user)
-            messages.success(request, "Te has registrado correctamente")
-            #redigir al home
-            return redirect(to="index")
+            user = authenticate(username = formulario.data['username'], password = formulario.data['password'])
+            if user is not None:
+                login_auth(request, user)
+                #redigir al home
+                return redirect(to="index")
+            else:
+                data['mensaje'] = "El Usuario o la Contraseña son Incorrectos"
+                print(data['mensaje'])
+                return render(request, 'registration/login.html', data) 
+        else:
+            print(data['mensaje'])
+            return render(request, 'registration/login.html', data)
+                
+        
         data["form"] = formulario
+    return render(request, 'registration/login.html', data)
+
+def register(request):
+    data = {
+        'form': RegisterForm(),
+        'register_message':""
+    }
+
+    if request.method == 'POST':
+        formulario = RegisterForm(request.POST)
+        
+        if formulario.is_valid():
+            if User.objects.filter(username = formulario.data['username']).exists() == False:
+                formulario.save()
+                user = authenticate(username = formulario.data['username'], password = formulario.data['password1'])
+                login_auth(request, user)
+                #redigir al home
+                return redirect(to="index")
+        else:
+            data['register_message'] = "El usuario ya existe"
+            return render(request, 'registration/register.html', data)
+            
+        data['form'] = formulario
 
     return render(request, 'registration/register.html', data)
 

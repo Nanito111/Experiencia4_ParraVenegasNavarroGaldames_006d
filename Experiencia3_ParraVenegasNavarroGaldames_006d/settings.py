@@ -83,38 +83,38 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.oracle',
-    #     'NAME': 'tcps://adb.sa-santiago-1.oraclecloud.com:1522/g3fe9e0e9ee6545_macetitasdb_high.adb.oraclecloud.com?wallet_location=./Wallet_macetitasDB',
-    #     'USER': 'admin',
-    #     'PASSWORD': 'Macetitas.1234',
-    # }
     'default': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'localhost:1521/xe',
-        'USER': 'SYSTEM',
-        'PASSWORD': '1234',
+        'NAME': 'tcps://adb.sa-santiago-1.oraclecloud.com:1522/g3fe9e0e9ee6545_macetitasdb_high.adb.oraclecloud.com?wallet_location=./Wallet_macetitasDB',
+        'USER': 'admin',
+        'PASSWORD': 'Macetitas.1234',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.oracle',
+    #     'NAME': 'localhost:1521/xe',
+    #     'USER': 'SYSTEM',
+    #     'PASSWORD': '1234',
+    # }
 }
 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+# AUTH_PASSWORD_VALIDATORS = [
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+#     },
+# ]
 
 
 # Internationalization
