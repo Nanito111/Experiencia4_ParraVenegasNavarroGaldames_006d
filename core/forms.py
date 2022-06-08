@@ -1,9 +1,10 @@
 from django import forms
 from .models import *
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
+from django.contrib.auth import authenticate, login as login_auth
 from django.contrib.auth.models import User    
 
-class UserChangeForm(ModelForm):
+class UserChangeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = '__all__'
@@ -24,6 +25,21 @@ class UserLoginForm(AuthenticationForm):
     
     username = forms.CharField(widget = forms.TextInput(attrs = {'class': 'form-control','id': 'username','type':'text'}))
     password = forms.CharField(widget = forms.PasswordInput(attrs = {'class': 'form-control','id': 'password','type':'password'}))
+
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        if not user or not user.is_active:
+            raise forms.ValidationError("")
+        return self.cleaned_data
+    
+    def login(self, request):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        return user
+
 
 class RegisterForm(UserCreationForm):
     username = forms.CharField(required=True, min_length=3, max_length=21, widget = forms.TextInput(attrs = {'class': 'form-control','id': 'username'}))
@@ -50,7 +66,7 @@ class RegisterForm(UserCreationForm):
         
         return user
 
-class EditUserForm(CustomUserCreationForm):
+class EditUserForm(RegisterForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'password1', 'password2']
@@ -61,11 +77,9 @@ class EditUserForm(CustomUserCreationForm):
 class SoporteForm(forms.ModelForm):
     nombre = forms.CharField(max_length=50, label="Nombre", widget = forms.TextInput(
         attrs = {'class': 'form-control',
-                 'placeholder': 'Juan',
                  'id': 'name'}))
     correo = forms.CharField(max_length=100, label="Correo electrónico", widget = forms.TextInput(
         attrs = {'class': 'form-control',
-                 'placeholder': 'juan_perez@email.com',
                  'id': 'mail'}))
     tipo_consulta = forms.IntegerField(label="Tipo de consulta", widget = forms.Select(
         choices = ( 
@@ -88,11 +102,9 @@ class SoporteForm(forms.ModelForm):
 class ContactoForm(forms.ModelForm):
     nombre = forms.CharField(max_length=50, label="Nombre", widget = forms.TextInput(
         attrs = {'class': 'form-control',
-                 'placeholder': 'Juan',
                  'id': 'name'}))
     correo = forms.CharField(max_length=100, label="Correo electrónico", widget = forms.TextInput(
         attrs = {'class': 'form-control',
-                 'placeholder': 'juan_perez@email.com',
                  'id': 'mail'}))
     telefono = forms.CharField(max_length=12, label="Telefono", widget = forms.TextInput(
         attrs = {'class': 'form-control',

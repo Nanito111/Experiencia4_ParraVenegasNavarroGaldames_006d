@@ -46,31 +46,13 @@ def soporte(request):
     return render(request, 'core/soporte.html', data)
 
 def login(request):
-    data = {
-        'form': UserLoginForm(),
-        'mensaje': "AWWA",
-    }
-
-    if request.method == 'POST':
-        formulario = UserLoginForm(request.POST)
-        
-        if formulario.is_valid():
-            user = authenticate(username = formulario.data['username'], password = formulario.data['password'])
-            if user is not None:
-                login_auth(request, user)
-                #redigir al home
-                return redirect(to="index")
-            else:
-                data['mensaje'] = "El Usuario o la Contraseña son Incorrectos"
-                print(data['mensaje'])
-                return render(request, 'registration/login.html', data) 
-        else:
-            print(data['mensaje'])
-            return render(request, 'registration/login.html', data)
-                
-        
-        data["form"] = formulario
-    return render(request, 'registration/login.html', data)
+    form = UserLoginForm(request.POST or None)
+    if request.POST and form.is_valid():
+        user = form.login(request)
+        if user:
+            login(request, user)
+            return redirect(to="index")# Redirect to a success page.
+    return render(request, 'registration/login.html', {'login_form': form })
 
 def register(request):
     data = {
@@ -86,6 +68,7 @@ def register(request):
                 formulario.save()
                 user = authenticate(username = formulario.data['username'], password = formulario.data['password1'])
                 login_auth(request, user)
+                messages.success(request, "Usuario creado correctamente")
                 #redigir al home
                 return redirect(to="index")
         else:
