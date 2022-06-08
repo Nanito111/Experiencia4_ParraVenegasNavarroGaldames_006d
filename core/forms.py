@@ -78,9 +78,9 @@ class SoporteForm(forms.ModelForm):
     nombre = forms.CharField(max_length=50, label="Nombre", widget = forms.TextInput(
         attrs = {'class': 'form-control',
                  'id': 'name'}))
-    correo = forms.CharField(max_length=100, label="Correo electrónico", widget = forms.TextInput(
+    correo = forms.CharField(max_length=100, label="Correo electrónico", widget = forms.EmailInput(
         attrs = {'class': 'form-control',
-                 'id': 'mail'}))
+                 'id': 'email'}))
     tipo_consulta = forms.IntegerField(label="Tipo de consulta", widget = forms.Select(
         choices = ( 
             (0, 'Sugerencia'),
@@ -88,11 +88,11 @@ class SoporteForm(forms.ModelForm):
             (2, 'Comentario'),
             (3, 'Otro') ),
         attrs = {'class': 'form-select',
-                 'id': 'name'}))
+                 'id': 'tipo_consulta'}))
     mensaje = forms.CharField(label="Mensaje", widget = forms.Textarea(
         attrs = {'class': 'form-control',
                  'placeholder': 'Ingrese un mensaje aqui',
-                 'id': 'name',
+                 'id': 'message',
                  'rows': 4}))
 
     class Meta:
@@ -103,21 +103,21 @@ class ContactoForm(forms.ModelForm):
     nombre = forms.CharField(max_length=50, label="Nombre", widget = forms.TextInput(
         attrs = {'class': 'form-control',
                  'id': 'name'}))
-    correo = forms.CharField(max_length=100, label="Correo electrónico", widget = forms.TextInput(
+    correo = forms.CharField(max_length=100, label="Correo electrónico", widget = forms.EmailInput(
         attrs = {'class': 'form-control',
-                 'id': 'mail'}))
-    telefono = forms.CharField(max_length=12, label="Telefono", widget = forms.TextInput(
+                 'id': 'email'}))
+    telefono = forms.CharField(max_length=12, label="Telefono", widget = forms.NumberInput(
         attrs = {'class': 'form-control',
                  'placeholder': '569123456789',
-                 'id': 'name'}))
+                 'id': 'number'}))
     asunto = forms.CharField(max_length=100, label="Asunto", widget = forms.TextInput(
         attrs = {'class': 'form-control',
                  'placeholder': 'Ingrese un asunto',
-                 'id': 'name'}))
+                 'id': 'asunto'}))
     mensaje = forms.CharField(label="Mensaje", widget = forms.Textarea(
         attrs = {'class': 'form-control',
                  'placeholder': 'Ingrese un mensaje aqui',
-                 'id': 'name',
+                 'id': 'message',
                  'rows': 4}))
     class Meta:
         model = Contacto
