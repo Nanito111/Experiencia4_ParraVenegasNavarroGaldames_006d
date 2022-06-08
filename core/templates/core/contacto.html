@@ -1,3 +1,13 @@
+<!--
+
+To run this demo, you need to replace 'YOUR_API_KEY' with an API key from the ArcGIS Developer dashboard.
+
+Sign up for a free account and get an API key.
+
+https://developers.arcgis.com/documentation/mapping-apis-and-services/get-started/
+
+-->
+
 <!DOCTYPE html>
 <html lang="es">
 {% load static %}
@@ -8,30 +18,132 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <link rel="stylesheet" href="{% static 'core/css/global.css' %}">
+  <link rel="icon" type="image/x-icon" href="{% static 'core/img/favicon.ico' %}">
   <title>Contacto - Macetitas</title>
   <style>
-    /* Chrome, Safari, Edge, Opera */
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
+    #viewDiv {
+      padding: 0;
       margin: 0;
-    }
-    
-    /* Firefox */
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-    iframe {
-      height: 400px;
+      height: 500px;
       width: 100%;
     }
-    </style>
+
+  </style>
+
+  <link rel="stylesheet" href="https://js.arcgis.com/4.23/esri/themes/light/main.css">
+  <script src="https://js.arcgis.com/4.23/"></script>
+
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "esri/Graphic",
+      "esri/geometry/Point",
+      "esri/rest/route",
+      "esri/rest/support/RouteParameters",
+      "esri/rest/support/FeatureSet",
+      "esri/config"
+    ],(Map, MapView, Graphic, Point, route, RouteParameters, FeatureSet, esriConfig)=> {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (p) {
+        const apiKey = "AAPK42283c0dc0834eafaecd07d3c3019657QplFUP_7bK8M-d2EuwT5SdUh166hJ6wBsj_TEnEzZtKa3_9AdjXuZDIqkhLmqZIv";
+
+        esriConfig.apiKey = apiKey;
+
+      
+        const map = new Map({
+          basemap: "arcgis-navigation"
+        });
+
+        const center = new Point ([-70.75218818957177, -33.510669277782604]);
+        const origin = new Point([p.coords.longitude, p.coords.latitude]);
+        const destination = new Point([-70.75218818957177, -33.510669277782604]);
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          center: center,
+          zoom: 12,
+          constraints: {
+          snapToZoom: false
+        }
+        });
+
+        view.when(()=> {
+          addGraphic("start", origin);
+          addGraphic("finish", destination);
+          getRoute();
+        });
+
+        function addGraphic(type, point) {
+          let color = "#ffffff";
+          let outlineColor = "#000000"
+          let size = "12px";
+          if (type == "start") {
+            color = "#ffffff";
+          } else if (type == "stop") {
+            color = "#000000";
+            outlineColor = "#ffffff";
+            size = "8px";
+          } else {
+            color = "#000000";
+            outlineColor = "#ffffff";
+          }
+          const graphic = new Graphic({
+          symbol: {
+            type: "simple-marker",
+            color: color,
+            size: size,
+            outline: {
+              color: outlineColor,
+              width: "1px"
+            }
+          },
+          geometry: point
+          });
+          view.graphics.add(graphic);
+        }
+
+        function getRoute() {
+
+        const routeUrl = "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World";
+
+        const routeParams = new RouteParameters({
+          stops: new FeatureSet({
+            features: view.graphics.toArray()
+          }),
+          returnDirections: true,
+          directionsLanguage: "es"
+          });
+
+        route.solve(routeUrl, routeParams)
+          .then((data)=> {
+            if (data.routeResults.length > 0) {
+              showRoute(data.routeResults[0].route);
+              showDirections(data.routeResults[0].directions.features);
+            }
+          })
+          .catch((error)=>{
+            console.log(error);
+          })
+      }
+
+      function showRoute(routeResult) {
+        routeResult.symbol = {
+          type: "simple-line",
+          color: [5, 150, 255],
+          width: 3
+        };
+        view.graphics.add(routeResult, 0);
+      }
+        });
+      }
+    });
+  </script>
 </head>
 <body>
   <!-- TOP BAR -->
   {% include "core/repeat/topBar.html" %}
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26619.667506001068!2d-70.76060885405637!3d-33.4894478688012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662dcd1fe0c7bab%3A0x4d17b82a7ba77488!2sDuoc%20UC%3A%20Sede%20Maipu!5e0!3m2!1ses!2scl!4v1652278979149!5m2!1ses!2scl" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-  <!-- Formulario de Feedback -->
   <div class="container my-5">
     <div class="row">
       <div class="col-12 col-md-6 offset-md-3">
@@ -39,6 +151,7 @@
           <div class="card-body">
             <h2>Contacto</h2>
             <p>Encuentranos en la siguiente dirección</p>
+            <div id="viewDiv"></div>
             <hr>
             <form action="" method="POST">
               {% csrf_token %}
@@ -51,13 +164,5 @@
       </div>
     </div>
   </div>
-  
-  <!-- FOOTER -->
-  {% include "core/repeat/footer.html" %}
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  <script src="{% static 'core/js/form_validator.js' %}"></script>
-
 </body>
 </html>
