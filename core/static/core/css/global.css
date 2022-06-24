@@ -6,7 +6,6 @@
     .nav-item a{
         font-size: 1.2em;
     }
-
     /* INDEX */
     .carouselImg{ transform: translateX(-14rem);}
     .carouselText{
@@ -30,6 +29,9 @@
     .carouselText h1{
         letter-spacing: 1rem;
     }
+    .logoImg{
+        max-height: 25px;
+    }
 }
 
 /* MEDIUM */
@@ -39,17 +41,12 @@
     .carouselText{
         bottom: 8vw;
     }
-    
-    /* topbar */
-    .logoImg{
-        width: 250px;
-        height: 25px;
-    }
 
     .frameVideo{
         width: calc(37.5vw);
         height: calc(20.8125vw);
     }
+    
 }
 /* LARGE */
 @media (min-width: 992px) {
@@ -101,12 +98,15 @@
 }
 
 .logoImg{
-    max-height: 25px;
     image-rendering: -webkit-optimize-contrast;
 }
 
 .navbar-toggler:focus {
     box-shadow: none;
+}
+
+nav .bi-list {
+    font-size: 3rem;
 }
 
 nav ~ * {
@@ -189,6 +189,14 @@ a:hover{
     margin-top: 5em;
     width: 270px;
     height: 270px;
+}
+
+.cart-count{
+    font-family: 'Courier New', Courier, monospace;
+    font-style: normal;
+    font-size: 0.8rem;
+    left: 0;
+    top: 1.6rem;
 }
 
 .list-group-item {

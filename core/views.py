@@ -13,8 +13,8 @@ def index(request):
 def quienes_somos(request):
     return render(request, 'core/quienes_somos.html')
 
-def galeria(request):
-    return render(request, 'core/galeria.html')
+def tienda(request):
+    return render(request, 'tienda/tienda.html')
 
 def contacto(request):
     data = {
@@ -30,7 +30,6 @@ def contacto(request):
             data["form"] = formulario
     return render(request, 'core/contacto.html', data)
 
-
 def soporte(request):
     data = {
         'form': SoporteForm()
@@ -44,6 +43,7 @@ def soporte(request):
         else:
             data["form"] = formulario
     return render(request, 'core/soporte.html', data)
+
 
 def login(request):
     form = UserLoginForm(request.POST or None)
