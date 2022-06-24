@@ -44,6 +44,7 @@
           <div class="card-body">
             <div class="d-flex justify-content-between">
               <h2>Mi Cuenta</h2>
+
               <a href="{% url 'editaccount' user.get_username %}"><button class="btn btn-success">Editar</button></a>
             </div>
             <hr>
@@ -63,6 +64,7 @@
               {{user.last_name}}
               {% endif %}
             </p>
+            <a href="{% url 'ordenes' user.get_username %}"><button class="btn btn-primary">Mis pedidos</button></a>
             <button class="btn btn-danger" onclick="eliminarCuenta('{{user.get_username}}')">Eliminar Cuenta</button>
           </div>
           

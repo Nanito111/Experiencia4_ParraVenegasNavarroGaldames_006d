@@ -83,18 +83,18 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
-    'default': {
-        'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'tcps://adb.sa-santiago-1.oraclecloud.com:1522/g3fe9e0e9ee6545_macetitasdb_high.adb.oraclecloud.com?wallet_location=./Wallet_macetitasDB',
-        'USER': 'admin',
-        'PASSWORD': 'Macetitas.1234',
-    }
     # 'default': {
     #     'ENGINE': 'django.db.backends.oracle',
-    #     'NAME': 'localhost:1521/xe',
-    #     'USER': 'SYSTEM',
-    #     'PASSWORD': '1234',
+    #     'NAME': 'tcps://adb.sa-santiago-1.oraclecloud.com:1522/g3fe9e0e9ee6545_macetitasdb_high.adb.oraclecloud.com?wallet_location=./Wallet_macetitasDB',
+    #     'USER': 'admin',
+    #     'PASSWORD': 'Macetitas.1234',
     # }
+    'default': {
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': 'localhost:1521/xe',
+        'USER': 'c##MACETITAS',
+        'PASSWORD': '1234',
+    }
 }
 
 
@@ -138,3 +138,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import os
+
+MEDIA_URL ='/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
