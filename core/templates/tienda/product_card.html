@@ -3,33 +3,34 @@
 <div class="col-6 col-sm-6 col-md-4 col-lg-3">
     {% load static %}
     <button class="btn btn-primary-outline" type="button" data-bs-toggle="collapse"
-        data-bs-target="#card_{{ cardNumber }}" aria-expanded="false" aria-controls="card_{{ cardNumber }}">
-        <img class=" img-fluid m-0" src="{% static 'core/img/tienda/costilla_de_adan.jpg' %}">
+        data-bs-target="#card_{{ plant.id }}" aria-expanded="false" aria-controls="card_{{ plant.id }}">
+        <img class=" img-fluid m-0" src="{{ plant.imagen.url }}">
     </button>
-    <h5 class="h5 mt-3">Costilla de Adán</h5>
-    <p class="text-muted">Monstera Deliciosa</p>
-    <div class="collapse multi-collapse" id="card_{{ cardNumber }}">
+    <h5 class="h5 mt-3">{{plant.nombre_prod}}</h5>
+    <p class="text-muted">{{plant.descripcion_prod}}</p>
+    <div class="collapse multi-collapse" id="card_{{ plant.id }}">
         <div class="card p-3">
             <ul class="list-group list-group-flush text-start">
                 <li class="list-group-item list">
                     <div class="m-0 d-flex justify-content-between">
                         <p class="text-muted">Precio</p>
-                        <p class="h4">$3.000 CLP</p>
+                        <p class="h4">${{plant.precio}}</p>
                     </div>
                 </li>
                 <li class="list-group-item list">
                     <div class="d-flex justify-content-between">
                         <p class="text-muted">Toxicidad</p>
-                        <p>Solo si es ingerido</p>
+                        <p>{{plant.toxicidad}}</p>
                     </div>
                 </li>
                 <li class="list-group-item list">
                     <div class="d-flex justify-content-between">
-                        <p class="text-muted">Tamaño</p>
-                        <p>150 - 200 cm</p>
+                        <p class="text-muted">Altura</p>
+                        <p>{{plant.alto}}</p>
                     </div>
                 </li>
             </ul>
+            <a href="{% url 'checkout' plant.id %}"><button class="btn btn-primary w-100">Comprar</button></a>
         </div>
     </div>
 </div>
