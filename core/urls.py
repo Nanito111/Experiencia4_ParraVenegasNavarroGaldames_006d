@@ -8,8 +8,10 @@ urlpatterns = [
     path('contacto', contacto, name="contacto"),
     path('soporte', soporte, name="soporte"),
     path('login', login, name="login"),
+    path('checkout/<id>/', checkout, name="checkout"),
     path('register/', register, name="register"),
     path('account', account, name="account"),
     path('editaccount/<id>/', editaccount, name="editaccount"),
-    path('deleteaccount/<id>/', deleteaccount, name="deleteaccount")
+    path('deleteaccount/<id>/', deleteaccount, name="deleteaccount"),
+    path('ordenes/<id>/', ordenes, name="ordenes")
 ]

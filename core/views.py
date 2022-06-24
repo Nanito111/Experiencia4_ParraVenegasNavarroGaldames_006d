@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.models import User
-from core.models import Contacto
-from .forms import RegisterForm, EditUserForm, UserLoginForm, SoporteForm, ContactoForm, UserChangeForm, RemoveForm
+from core.models import Contacto, Planta, Boleta
+from .forms import RegisterForm, EditUserForm, UserLoginForm, SoporteForm, ContactoForm, UserChangeForm, RemoveForm, BoletaForm
 from django.contrib.auth import authenticate, login as login_auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -14,8 +14,12 @@ def quienes_somos(request):
     return render(request, 'core/quienes_somos.html')
 
 def tienda(request):
-    return render(request, 'tienda/tienda.html')
-
+    plantas = Planta.objects.all()
+    datos = {
+        'plantas': plantas
+    }
+    return render(request, 'tienda/tienda.html', datos)
+    
 def contacto(request):
     data = {
         'form': ContactoForm()
@@ -43,7 +47,6 @@ def soporte(request):
         else:
             data["form"] = formulario
     return render(request, 'core/soporte.html', data)
-
 
 def login(request):
     form = UserLoginForm(request.POST or None)
@@ -112,3 +115,33 @@ def deleteaccount (request, id):
         return redirect(to="index")
     usuario.delete()
     return redirect(to="index")
+
+@login_required
+def checkout(request, id):
+    planta = Planta.objects.get(id=id)
+    datos = {
+        "plant": planta,
+        "form": BoletaForm
+    }
+    if request.method == 'POST':
+        data = dict(request.POST)
+        cantidad = data['cantidadProd'][0]
+        direccion = data[''][0]
+        telefono = data[''][0]
+
+    return render(request, 'core/checkout.html', datos)
+
+
+
+@login_required
+def ordenes(request, id):
+    user = User.objects.get(username = id)
+    if user != request.user:
+        return redirect(to="index")
+
+    datos = {
+        'orden': Boleta.objects.filter(id_cliente = user)
+    }
+
+    return render(request, 'core/ordenes.html' , datos)
+

@@ -63,6 +63,7 @@
               {{user.last_name}}
               {% endif %}
             </p>
+            <a href="{% url 'ordenes' user.get_username %}"><button class="btn btn-primary">Mis pedidos</button></a>
             <button class="btn btn-danger" onclick="eliminarCuenta('{{user.get_username}}')"><i class="bi bi-person-x-fill h5 me-2"></i>Eliminar Cuenta</button>
           </div>
           

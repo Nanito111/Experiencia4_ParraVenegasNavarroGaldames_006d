@@ -127,3 +127,24 @@ class RemoveForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username',)
+
+class BoletaForm(forms.ModelForm):
+    nombre = forms.CharField(max_length=50, label="Nombre", widget = forms.TextInput(
+        attrs = {'class': 'form-control',
+                 'id': 'name'}))
+    correo = forms.CharField(max_length=100, label="Correo electrónico", widget = forms.EmailInput(
+        attrs = {'class': 'form-control',
+                 'id': 'email'}))
+    telefono = forms.CharField(max_length=12, label="Telefono", widget = forms.NumberInput(
+        attrs = {'class': 'form-control',
+                 'placeholder': '569123456789',
+                 'id': 'number'}))
+    unidades = forms.IntegerField(label="unidades", widget = forms.NumberInput(
+            attrs = {'class': 'form-control',
+                    'id': 'number'}))
+    class Meta:
+        model = Boleta
+        fields = '__all__'
+        exclude = ('id', 'id_producto', 'id_cliente', 'cantidad', 'precio', 'estado')
+
+
