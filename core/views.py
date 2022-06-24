@@ -13,13 +13,13 @@ def index(request):
 def quienes_somos(request):
     return render(request, 'core/quienes_somos.html')
 
-def galeria(request):
+def tienda(request):
     plantas = Planta.objects.all()
     datos = {
         'plantas': plantas
     }
-    return render(request, 'core/galeria.html', datos)
-
+    return render(request, 'tienda/tienda.html', datos)
+    
 def contacto(request):
     data = {
         'form': ContactoForm()
@@ -33,7 +33,6 @@ def contacto(request):
         else:
             data["form"] = formulario
     return render(request, 'core/contacto.html', data)
-
 
 def soporte(request):
     data = {
