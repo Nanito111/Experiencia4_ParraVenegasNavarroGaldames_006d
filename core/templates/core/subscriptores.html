@@ -108,7 +108,7 @@
             $.ajax({
                 type: "DELETE",
                 url: url,
-                headers: { "X-CSRFToken": $csrftoken },
+                headers: { "X-CSRFToken": csrftoken },
                 contentType: 'application/json',
                 success: function (result) {
                     location.reload()
