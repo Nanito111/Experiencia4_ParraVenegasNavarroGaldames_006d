@@ -1,0 +1,188 @@
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+<head>
+    {% include "core/repeat/head.html" %}
+    <title>Carrito - Macetitas</title>
+</head>
+<body>
+<div class="main-content">
+<!-- TOP BAR -->
+    {% include "core/repeat/topBar.html" %}
+    
+    <!-- <div>
+        <h4 id="cartLabel"><i class="bi bi-bag-fill"></i>&ensp;Carrito</h4>
+    </div> -->
+    <div class="container-fluid mt-2">
+        <div class="row justify-content-center justify-content-md-evenly" {% if not cartProductos %} style="height: 80vh;" {% endif %}>
+            <div id="cart-section" class="col-12 col-md-5 align-self-center">
+                {% if not cartProductos %}
+                <h1 class="text-center">No hay productos en tu carrito <i class="bi bi-bag"></i></h1>
+                {% else %}
+                <div style="overflow: scroll; max-height:calc(100vh - 41px); min-height: 50vw;" id="scrolling">
+                    {% for item in cartProductos %}
+                    {% include "tienda/cart_product_card.html" %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <!-- SECCION RESUMEN DE COMPRA -->
+            <div class="col-12 col-md-5 align-self-center my-2 my-md-0" id="comprar-section" >
+                {% if not cartProductos %}
+                <div class="card border-success w-100 bg-light placeholder-wave" aria-hidden="true">
+                    <h4 class="card-header placeholder fw-bold text-white bg-dark w-100"></h4>
+                    <div class="card-body">
+                        <div class="row text-black">
+                            <div class="col-6">
+                                <p class="card-text placeholder w-100 rounded-3"></p>
+                            </div>
+                            <div class="col-6 text-end ">
+                                <p class="card-text placeholder w-75 rounded-3" id="display-subtotal" data-subtotal=></p>
+                            </div>
+                        </div>
+                        <div class="row text-black">
+                            <div class="col-6">
+                                <p class="card-text placeholder w-75 rounded-3"></p>
+                            </div>
+                            <div class="col-6 text-end">
+                                <p class="card-text placeholder w-75 rounded-3"></p>
+                            </div>
+                        </div>
+                        <div class="row mt-2 text-center">
+                            <h3 style="width: 80%;" class="card-text bg-black rounded-pill mt-1 fw-bold placeholder mx-auto" id="display-total" data-total=""></h3>
+                        </div>
+                        <hr size="3" width="100%" color="black">
+                        <form action="">
+                            <div class="row text-black justify-content-evenly">
+                                <h5 class="card-title placeholder rounded-3 w-75"></h5>
+                                <div class="col-6">
+                                    <input class="form-control placeholder h-75" type="text" disabled>
+                                </div>
+                                <div class="col-6">
+                                    <button type="summit" class="btn btn-dark w-100  h-75 disabled placeholder"></button>
+                                </div>
+                            </div>
+                        </form>
+                        <hr size="3" width="100%" color="black">
+                        <button id="btn-comprar" type="button" class="btn btn-success w-100 disabled placeholder"></button>
+                    </div>
+                </div>
+                {% else %}
+                {% load mathfilters %}
+                <div class="card border-success w-100 bg-light">
+                    <div class="card-header fw-bold text-white bg-dark">
+                        RESUMEN DE COMPRA
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-black">
+                            <div class="col-6">
+                                <h5 class="card-text">Subtotal:</h5>
+                            </div>
+                            <div class="col-6 text-end">
+                                {% load humanize %}
+                                <p class="card-text" id="display-subtotal" data-subtotal={{request.session.subtotal}}>${{request.session.subtotal|intcomma}}</p>
+                            </div>
+                        </div>
+                        <div class="row text-black">
+                            <div class="col-6">
+                                <h5 class="card-text">Descuento ({{request.session.descuento|floatformat:0}}%):</h5>
+                            </div>
+                            <div class="col-6 text-end">
+                        {% with discount=request.session.subtotal|mul:request.session.descuento|div:100|floatformat:0 %}
+                                <p class="card-text" id="display-descuento">${{discount|intcomma}}</p>
+                            </div>
+                        </div>
+                        <div class="row text-white bg-dark rounded-pill mx-3">
+                            <div class="col-6">
+                                <h4 class="card-text mt-1 fw-bold">Total:</h4>
+                            </div>
+                            <div class="col-6 text-end">
+                                <p class="card-text fs-4" id="display-total" data-total={{request.session.subtotal|sub:discount}}>
+                                    ${{ request.session.subtotal|sub:discount |intcomma}}
+                                </p>
+                            </div>
+                        </div>
+                        {% endwith %}
+                        <hr size="3" width="100%" color="black">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="row text-black justify-content-evenly">
+                                <h5 class="card-title fw-bold">¿Tienes un cupon?</h5>
+                                <div class="col-6">
+                                    <input class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Solo se puede usar un cupon por compra" type="text" placeholder="Código Cupon" name="cupon">
+                                </div>
+                                <div class="col-6">
+                                    <button type="summit" class="btn btn-dark w-100">APLICAR <i class="bi bi-ticket-detailed-fill ms-2"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                        <hr size="3" width="100%" color="black">
+                        <button id="btn-comprar" type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop">COMPRAR</button>
+                        
+                        <!-- esto hace que si estas registrado no sugiere que te registres para comprar -->
+                        <script>
+                            if (user != 'AnonymousUser') {
+                                var btn_comprar = document.getElementById('btn-comprar')
+                                btn_comprar.removeAttribute('data-bs-toggle')
+                                btn_comprar.removeAttribute('data-bs-target')
+                            }
+                        </script>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">¡ATENCION!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Para continuar con tu compra, debes iniciar sesión ¿Estas de acuerdo?
+                </div>
+                <div class="modal-footer flex-nowrap justify-content-center fw-bold">
+                    <button type="button" class="btn btn-secondary w-50" data-bs-dismiss="modal">NO</button>
+                    <a  class="btn btn-success w-50" href="{% url 'login' %}">SI</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- TOAST -->
+    {% if alert_cupon is not 0 %}
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toastDiscount" class="toast fade hide fw-bold {% if alert_cupon is 2 %} border-success {% else %} border-danger {% endif %}" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                {% if alert_cupon is 2 %}
+                <div class="toast-body text-success fs-5">
+                    ¡Cupon aplicado! <i class="bi bi-check-circle-fill"></i>
+                </div>
+                {% else %}
+                <div class="toast-body text-danger fs-5">
+                    ¡Cupon Invalido! <i class="bi bi-dash-circle-fill"></i>
+                </div>
+                {% endif %}
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+    
+    {% include "core/repeat/footer.html" %}
+    <script src="{% static 'core/js/cart.js' %}"></script>
+    {% if alert_cupon is not 0 %}
+    <script>
+        var toastDiscount = document.getElementById('toastDiscount')
+        var toast = new bootstrap.Toast(toastDiscount)
+        toast.show()
+    </script>
+    {% endif %}
+</body>
+</html>

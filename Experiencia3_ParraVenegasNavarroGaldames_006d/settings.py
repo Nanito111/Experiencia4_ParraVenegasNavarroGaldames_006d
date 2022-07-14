@@ -34,6 +34,8 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+CART_SESSION_ID = 0
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,9 +45,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+    'mathfilters',
     'rest_framework',
     'core',
-    'rest_tienda',
+    'rest_subscriptor',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'Experiencia3_ParraVenegasNavarroGaldames_006d.urls'
@@ -89,7 +94,7 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'tcps://adb.sa-santiago-1.oraclecloud.com:1522/g3fe9e0e9ee6545_macetitasdb_high.adb.oraclecloud.com?wallet_location=./Wallet_macetitasDB',
+        'NAME': 'tcps://adb.sa-santiago-1.oraclecloud.com:1522/g3fe9e0e9ee6545_macetitasdb2_high.adb.oraclecloud.com?wallet_location=./Wallet_macetitasDB2',
         'USER': 'admin',
         'PASSWORD': 'Macetitas.1234',
     }
@@ -101,6 +106,12 @@ DATABASES = {
     # }
 }
 
+# CACHES = {
+#    'default': {
+#       'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#       'LOCATION': '127.0.0.1:11211',
+#    }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -124,14 +135,15 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-cl'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Santiago'
 
 USE_I18N = True
 
 USE_TZ = True
 
+USE_L10N = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/

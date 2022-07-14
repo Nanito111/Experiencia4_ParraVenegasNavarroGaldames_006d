@@ -1,94 +1,103 @@
 <!DOCTYPE html>
 <html lang="es">
 {% load static %}
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="{% static 'core/css/global.css' %}">
-  <link rel="icon" type="image/x-icon" href="{% static 'core/img/favicon.ico' %}">
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <title>Inicio - Macetitas</title>
+    {% include "core/repeat/head.html" %}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Inicio - Macetitas</title>
 </head>
+
 <body>
-  <!-- TOP BAR -->
-  {% include "core/repeat/topBar.html" %}
+    <div class="main-content">
+        <!-- TOP BAR -->
+        {% include "core/repeat/topBar.html" %}
 
-  <!-- Mid Body -->
+        <!-- Mid Body -->
 
-  <!-- Carrusell -->
-  <div id="carouselExampleCaptions" class="carousel slide carousel-fade m-auto" data-bs-ride="carousel">
-    <div class="carousel-inner bg-black mb-5">
-      <div class="carousel-item active carouselItem">
-        <img src="{% static 'core/img/index/carousel/slide1.jpg' %}" class="d-block carouselImg">
-        <div class="carousel-caption d-flex flex-column carouselText">
-          <h1 class="pb-sm-2 fw-bold fs-1">CALIDAD</h1>
-          <p class="mx-2 d-block fs-3">
-            Plantas cuidadas con amor y maceteros hechos con los mejores materiales
-          </p>
+        <!-- Carrusell -->
+        <div id="carouselExampleCaptions" class="carousel slide carousel-fade m-auto" data-bs-ride="carousel" >
+            <div class="carousel-inner bg-black mb-5" style="height: 48vh">
+                <div class="carousel-item active carouselItem">
+                    <img src="{% static 'core/img/index/carousel/slide1.jpg' %}" class="d-block carouselImg">
+                    <div class="carousel-caption d-flex flex-column carouselText">
+                        <h1 class="pb-sm-2 fw-bold fs-1">CALIDAD</h1>
+                        <p class="mx-2 d-block fs-3">
+                            Plantas cuidadas con amor y maceteros hechos con los mejores materiales
+                        </p>
+                    </div>
+                </div>
+                <div class="carousel-item carouselItem">
+                    <img src="{% static 'core/img/index/carousel/slide2.jpg' %}" class="d-block carouselImg">
+                    <div class="carousel-caption d-flex flex-column carouselText">
+                        <h1 class="pb-sm-2 fw-bold fs-1">VARIEDAD</h1>
+                        <p class="mx-2 d-block fs-3">
+                            Multiples maceteros y plantas para cada gusto y lugar de tu hogar
+                            <br>
+                        </p>
+                    </div>
+                </div>
+                <div class="carousel-item carouselItem">
+                    <img src="{% static 'core/img/index/carousel/slide3.jpg' %}" class="d-block carouselImg">
+                    <div class="carousel-caption d-flex flex-column carouselText">
+                        <h1 class="pb-sm-2 fw-bold fs-1">GRANITO DE ARENA</h1>
+                        <p class="mx-2 d-block fs-3">Cuando cuidas una planta, te cuidas a ti y al planeta</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-      </div>
-      <div class="carousel-item carouselItem">
-        <img src="{% static 'core/img/index/carousel/slide2.jpg' %}" class="d-block carouselImg">
-        <div class="carousel-caption d-flex flex-column carouselText">
-          <h1 class="pb-sm-2 fw-bold fs-1">VARIEDAD</h1>
-          <p class="mx-2 d-block fs-3">
-            Multiples maceteros y plantas para cada gusto y lugar de tu hogar
-            <br>
-          </p>
-        </div>
-      </div>
-      <div class="carousel-item carouselItem">
-        <img src="{% static 'core/img/index/carousel/slide3.jpg' %}" class="d-block carouselImg">
-        <div class="carousel-caption d-flex flex-column carouselText">
-          <h1 class="pb-sm-2 fw-bold fs-1">GRANITO DE ARENA</h1>
-          <p class="mx-2 d-block fs-3">Cuando cuidadas una planta, te cuidas a ti y al planeta</p>
-        </div>
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
 
-  <div class="container-fluid parrafoImg mb-5">
-    <div class="container-md d-md-flex text-center text-md-start align-items-center justify-content-around mb-4 mb-md-0">
-      <div class="me-md-5 text-block">
-        <h2 class="fw-bold fs-3">¿Has pensado en comprar y tener una planta?</h2>
-        <p class="fs-6 mb-5">Te invitamos a nuestra tienda virtual donde podrás encontrar una gran variedad de plantas, así como silvestres, exóticas o simplemente para decorar tu hogar. 
-        <br>Atrevete a mostrar tu amor por lo verde y tambien así ayudar a el planeta con tu granito de arena.</p>  
-      </div>
-      <img class="img-fluid mx-lg-0 mx-sm-auto d-sm-block" src="{% static 'core/img/index/img_Index_Plants_Text.png' %}" alt="">
+        <div class="container-fluid parrafoImg mb-5">
+            <div
+                class="container-md d-md-flex text-center text-md-start align-items-center justify-content-around mb-4 mb-md-0">
+                <div class="me-md-5 text-block">
+                    <h2 class="fw-bold fs-3">¿Has pensado en comprar y tener una planta?</h2>
+                    <p class="mb-5">Te invitamos a nuestra tienda virtual donde podrás encontrar una gran variedad de
+                        plantas, así como silvestres, exóticas o simplemente para decorar tu hogar.
+                        <br>Atrevete a mostrar tu amor por lo verde y tambien así ayudar a el planeta con tu granito de
+                        arena.
+                    </p>
+                </div>
+                <img class="img-fluid mx-lg-0 mx-sm-auto d-sm-block"
+                    src="{% static 'core/img/index/img_Index_Plants_Text.png' %}" alt="">
+            </div>
+            <div
+                class="container-md d-md-flex flex-md-row-reverse text-center text-md-end text-lg-start align-items-center justify-content-around">
+                <div class="ms-md-5 ms-lg-5 text-block ">
+                    <h2 class="fw-bold fs-3">Y si ya tienes alguna planta...¡no te olvides de las macetas!</h2>
+                    <p class="mb-5">Tenemos una gran variedad de maceteros, de buena calidad y de diversos materiales,
+                        diseños y tamaños, para así darle estilo a tu hogar y tu planta.</p>
+                </div>
+                <img class="img-fluid mx-lg-0 mx-sm-auto d-sm-block"
+                    src="{% static 'core/img/index/img_Index_Macetero_Text.png' %}" alt="">
+            </div>
+        </div>
+        {% if messages %}
+        {% for m in messages %}
+        <script>
+            Swal.fire({
+                "title": "Felicitaciones",
+                "text": "{{m}}",
+                "icon": "success",
+                "confirmButtonColor": "#157347"
+            })
+        </script>
+        {% endfor %}
+        {% endif %}
     </div>
-    <div class="container-md d-md-flex flex-md-row-reverse text-center text-md-end text-lg-start align-items-center justify-content-around">
-      <div class="ms-md-5 ms-lg-5 text-block ">
-        <h2 class="fw-bold fs-3">Y si ya tienes alguna planta...¡no te olvides de las macetas!</h2>
-        <p class="fs-6 mb-5">Tenemos una gran variedad de maceteros, de buena calidad y de diversos materiales, diseños y tamaños, para así darle estilo a tu hogar y tu planta.</p>  
-      </div>
-      <img class="img-fluid mx-lg-0 mx-sm-auto d-sm-block" src="{% static 'core/img/index/img_Index_Macetero_Text.png' %}" alt="">
-    </div>
-  </div>
-  {% if messages %}
-    {% for m in messages %}
-      <script>
-        Swal.fire({
-          "title": "Felicitaciones",
-          "text": "{{m}}",
-          "icon": "success",
-          "confirmButtonColor": "#157347"
-        })
-      </script>
-    {% endfor %}
-  {% endif %}
-  <!-- FOOTER -->
-  {% include "core/repeat/footer.html" %}
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <!-- FOOTER -->
+    {% include "core/repeat/footer.html" %}
 </body>
+
 </html>

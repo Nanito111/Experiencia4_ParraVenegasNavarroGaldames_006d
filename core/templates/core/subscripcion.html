@@ -1,0 +1,126 @@
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
+<!DOCTYPE html>
+<html lang="es">
+{% load static %}
+
+<head>
+    {% include "core/repeat/head.html" %}
+    <title>Subscripción - Macetitas</title>
+</head>
+
+<body>
+<div class="main-content">
+    <!-- TOP BAR -->
+    {% include "core/repeat/topBar.html" %}
+
+    <!-- Formulario de Feedback -->
+    {% load humanize %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body text-center">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <h2>Donar</h2>
+                        <p>Para convertirte en <span class="fw-bold">subscriptor</span> y obtener descuentos especiales
+                            en tus
+                            siguientes compras</p>
+                        <h5><i class="bi bi-cash-stack text-success"></i> Cantidad a Donar</h5>
+                        <hr>
+                        <div class="row align-items-center justify-content-around g-2">
+                            {% if isSub %}
+                            <div class="col-8 col-sm-5">
+                               <h4 style="border: 1px solid;" class="bg-white border-success rounded-pill text-success py-3">YA ERES UN SUBSCRIPTOR</h4>
+                            </div>
+                            {% else %}
+                            <div class="col-md-3">
+                                <input type="radio" class="radiobtn btn-check" name="btnradio" id="btnradio1" autocomplete="off" value="1" checked>
+                                <label class="btn btn-outline-dark w-100 rounded-3 my-1" for="btnradio1">
+                                    <h3>${{2500|intcomma}}</h3>
+                                    <p>Tier 1</p>
+                                    <hr>
+                                    <ul class="list-unstyled">
+                                        <li>5% de descuentos</li>
+                                        <li>Vigencia por 1 Mes</li>
+                                    </ul>
+                                </label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="radio" class="radiobtn btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="2">
+                                <label class="btn btn-outline-dark w-100 rounded-3 my-1" for="btnradio2">
+                                    <h3>${{10000|intcomma}}</h3>
+                                    <p>Tier 2</p>
+                                    <hr>
+                                    <ul class="list-unstyled">
+                                        <li>5% de descuentos</li>
+                                        <li>Vigencia por 6 Meses</li>
+                                    </ul>
+                                </label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="radio" class="radiobtn btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="3">
+                                <label class="btn btn-outline-dark w-100 rounded-3 my-1" for="btnradio3">
+                                    <h3>${{25000|intcomma}}</h3>
+                                    <p>Tier 3</p>
+                                    <hr>
+                                    <ul class="list-unstyled">
+                                        <li>5% de descuentos</li>
+                                        <li>Vigencia por 12 Meses</li>
+                                    </ul>
+                                </label>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% if isSub %}
+                        <div class="row justify-content-center g-0 mt-4 mb-2">
+                            <div class="col-10 col-sm-6 col-md-4">
+                                <input type="submit" class="btn btn-danger w-100 rounded-3" value="ANULAR SUBSCRIPCION">
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="row justify-content-center g-0 mt-4 mb-2">
+                            <div class="col-6">
+                                {% if request.user.is_anonymous %}
+                                <input type="button" class="btn btn-success w-100 rounded-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop" value="SUBSCRIBIRSE">
+                                {% else %}
+                                <input type="submit" class="btn btn-success w-100 rounded-3" value="SUBSCRIBIRSE">
+                                {% endif%}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">¡ATENCION!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Para continuar con tu compra, debes iniciar sesión ¿Estas de acuerdo?
+                </div>
+                <div class="modal-footer flex-nowrap justify-content-center fw-bold">
+                    <button type="button" class="btn btn-secondary w-50" data-bs-dismiss="modal">NO</button>
+                    <a  class="btn btn-success w-50" href="{% url 'login' %}">SI</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- FOOTER -->
+    {% include "core/repeat/footer.html" %}
+    <script src="{% static 'core/js/form_validator_soporte.js' %}"></script>
+</body>
+
+</html>

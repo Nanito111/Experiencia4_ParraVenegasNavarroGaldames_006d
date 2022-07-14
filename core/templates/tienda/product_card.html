@@ -1,36 +1,67 @@
-
-
-<div class="col-6 col-sm-6 col-md-4 col-lg-3">
+<div class="col-6 col-sm-6 col-md-4 col-lg-3 card" style="border-color: transparent;">
     {% load static %}
-    <button class="btn btn-primary-outline" type="button" data-bs-toggle="collapse"
-        data-bs-target="#card_{{ plant.id }}" aria-expanded="false" aria-controls="card_{{ plant.id }}">
-        <img class=" img-fluid m-0" src="{{ plant.imagen.url }}">
-    </button>
-    <h5 class="h5 mt-3">{{plant.nombre_prod}}</h5>
-    <p class="text-muted">{{plant.descripcion_prod}}</p>
-    <div class="collapse multi-collapse" id="card_{{ plant.id }}">
-        <div class="card p-3">
+    {% if product.stock > 0 %}
+        <button class="btn btn-success-outline" type="button" data-bs-toggle="collapse"
+        data-bs-target="#card_{{ product.id }}" aria-expanded="false" aria-controls="card_{{ product.id }}" >
+            <img class="card-img-top" src="{{ product.imagen.url }}">
+        </button>
+        <h5 class="card-title mt-3">{{product.nombre_prod}}</h5>
+        <p class="card-subtitle">{{product.descripcion1_prod}}</p>
+        <div class="collapse multi-collapse" id="card_{{ product.id }}">
             <ul class="list-group list-group-flush text-start">
                 <li class="list-group-item list">
                     <div class="m-0 d-flex justify-content-between">
                         <p class="text-muted">Precio</p>
-                        <p class="h4">${{plant.precio}}</p>
+                        {% load humanize %}
+                        <p class="h4" id="precio">${{ product.precio|intcomma }}</p>
                     </div>
                 </li>
                 <li class="list-group-item list">
                     <div class="d-flex justify-content-between">
-                        <p class="text-muted">Toxicidad</p>
-                        <p>{{plant.toxicidad}}</p>
+
+                    {% if product.tipo_producto == 0 %}
+                    <p class="text-muted">Altura (CM)</p>
+                    {% elif product.tipo_producto == 1 %}
+                    <p class="text-muted">Material</p>
+                    {% else %}
+                    <p class="text-muted">Cantidad</p>
+                    {% endif %}
+                        <p>{{product.descripcion2_prod}}</p>
                     </div>
                 </li>
                 <li class="list-group-item list">
                     <div class="d-flex justify-content-between">
-                        <p class="text-muted">Altura</p>
-                        <p>{{plant.alto}}</p>
+                        <p class="text-muted">Stock</p>
+                        <p>{{product.stock}}</p>
                     </div>
                 </li>
             </ul>
-            <a href="{% url 'checkout' plant.id %}"><button class="btn btn-primary w-100">Comprar</button></a>
+            <button id="addToCart_{{ product.id }}" class="btn btn-dark w-100 fs-5 update-cart" type="submit" data-product="{{product.id}}" data-action="add">
+                Añadir <i class="bi bi-bag-plus"></i>
+            </button>
+            
+            {% for item in carrito %}
+                {% if item.product == product.id %}
+                    <script type="text/javascript">
+                        var addToCartBtn = document.getElementById('addToCart_'+{{product.id}})
+                        addToCartBtn.disabled = true
+                        addToCartBtn.innerHTML = 'Añadido <i class="bi bi-bag-check"></i>'
+                    </script>
+                {% endif %}
+            {% endfor %}
         </div>
-    </div>
+
+    {% else %}
+    
+        <button class="btn btn-success-outline" type="button" data-bs-toggle="collapse"
+            data-bs-target="#card_{{ product.id }}" aria-expanded="false" aria-controls="card_{{ product.id }}" disabled style="opacity: 100%;">
+                <img class="card-img-top agotado" src="{{ product.imagen.url }}">
+                <p class="agotado fw-bold fs-1">AGOTADO</p>
+        </button>
+        <!-- <div style="background-color: rgba(0, 0, 0, 1);"></div> -->
+        <h5 class="card-title mt-3">{{product.nombre_prod}}</h5>
+        <p class="card-subtitle">{{product.descripcion1_prod}}</p>
+    
+    {% endif %}
+    
 </div>

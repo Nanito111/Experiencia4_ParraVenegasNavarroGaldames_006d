@@ -1,25 +1,24 @@
 <!-- Top Menu -->
 <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
+{% load static %}
 <nav class="navbar navbar-light bg-black text-center navbar-expand-md py-2">
-    {% load static %}
     <div class="container-fluid topBarMenu">
-        <a class="navbar-brand" href="#">
-            <img src="{% static 'core/img/logo.png' %}" class="logoImg img-fluid ps-3" alt="">
+        <a class="navbar-brand" href="{% url 'index' %}">
+            <img src="{% static 'core/img/logo.png' %}" class="logoImg img-fluid ps-md-3 pe-md-0" alt="">
         </a>
         <div class="col-md-6 collapse navbar-collapse justify-content-center mb-2 mb-md-0" id="openTopMenu">
             <ul class="navbar-nav mb-lg-0">
-                
                 <li class="nav-item my-2 my-md-0 me-md-4">
-                    <a class="text-opacity-75" href="{% url 'index' %}"><i class="bi bi-house-fill me-2 align-top"></i>PÁGINA PRINCIPAL</a>
+                    <a class="text-opacity-75 fw-bold" href="{% url 'quienes_somos' %}"><i class="bi bi-people-fill me-2"></i>QUIENES SOMOS</a>
                 </li>
                 <li class="nav-item my-2 my-md-0 me-md-4">
-                    <a class="text-opacity-75" href="{% url 'quienes_somos' %}"><i class="bi bi-people-fill me-2 align-top"></i>QUIENES SOMOS</a>
+                    <a class="text-opacity-75 fw-bold" href="{% url 'tienda' %}"><i class="bi bi-basket2-fill me-2"></i>TIENDA</a>
                 </li>
                 <li class="nav-item my-2 my-md-0 me-md-4">
-                    <a class="text-opacity-75" href="{% url 'tienda' %}"><i class="bi bi-basket2-fill me-2 align-top"></i>TIENDA</a>
+                    <a class="text-opacity-75 fw-bold" href="{% url 'subscripcion' %}"><i class="bi bi-gift-fill me-2"></i>DONAR</a>
                 </li>
-                <li class="nav-item my-2 my-md-0">
-                    <a class="text-opacity-75" href="{% url 'contacto' %}"><i class="bi bi-envelope-paper-fill me-2 align-top"></i>CONTACTO</a>
+                <li class="nav-item my-2 my-md-0 me-md-4">
+                    <a class="text-opacity-75 fw-bold" href="{% url 'contacto' %}"><i class="bi bi-envelope-paper-fill me-2"></i>CONTACTO</a>
                 </li>
                 <!-- <li class="nav-item my-2 my-md-0">
                     <a class="text-opacity-75" href="{% url 'soporte' %}">SOPORTE</a>
@@ -30,28 +29,33 @@
         
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#openTopMenu"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <div class="bi bi-list text-white"></div>
+            <div class="bi bi-list text-white" style="font-size: 3rem;"></div>
         </button>
-        <a class="text-light ms-5 me-2 my-0 " href="#">
+        <a class="text-light ms-0 ms-sm-5 me-2 my-0" href="{% url 'carrito' %}">
             <i class="bi bi-bag-fill fs-3 position-relative">
-                <span class="position-absolute translate-middle badge rounded-pill bg-danger cart-count">
-                    +99
+                <span class="position-absolute translate-middle badge rounded-pill bg-danger cart-count" id="cart-count">
+                    {{ request.session.carrito | length}}
                 </span>
             </i>
         </a>
-            {% if user.is_authenticated %}
-            
-            <div class="dropdown">
-                <a class="btn btn-success dropdown-toggle btn-sm" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-person-square h5 me-2"></i>CUENTA
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDarkDropdownMenuLink">
-                    <li><a class="dropdown-item" href="{% url 'account' %}"><i class="bi bi-person-square h5 me-2"></i>PERFIL</a></li>
-                    <li><a class="dropdown-item text-danger" href="{% url 'logout' %}"><i class="bi bi-box-arrow-left h5 me-2"></i>CERRAR SESIÓN</a></li>
-                </ul>
-            </div>
-            {% else %}
-            <a class="btn btn-outline-light btn-sm" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-left h5 me-2"></i>INICIAR SESIÓN</a>
-            {% endif %}
+        
+        {% if user.is_authenticated %}
+        
+        <div class="dropdown">
+            <a class="btn btn-success dropdown-toggle btn-sm" href="#" id="navbarDarkDropdownMenuLink" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person-square h5 me-2"></i>CUENTA
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDarkDropdownMenuLink">
+                <li><a class="dropdown-item" href="{% url 'account' %}"><i class="bi bi-person-square h5 me-2"></i>PERFIL</a>
+                </li>
+                <li><a class="dropdown-item text-danger" href="{% url 'logout' %}"><i
+                            class="bi bi-box-arrow-left h5 me-2"></i>CERRAR SESIÓN</a></li>
+            </ul>
+        </div>
+        {% else %}
+        <a class="btn btn-outline-light btn-sm fw-normal" href="{% url 'login' %}"><i
+                class="bi bi-box-arrow-in-left h5 me-2"></i>INICIAR SESIÓN</a>
+        {% endif %}
     </div>
 </nav>

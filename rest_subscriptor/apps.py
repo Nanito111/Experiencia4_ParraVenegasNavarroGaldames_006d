@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class RestTiendaConfig(AppConfig):
+class RestSubscriptorConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'rest_tienda'
+    name = 'rest_subscriptor'

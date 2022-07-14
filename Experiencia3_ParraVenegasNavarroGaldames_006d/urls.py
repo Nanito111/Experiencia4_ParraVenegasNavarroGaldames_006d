@@ -23,7 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('api/', include('rest_tienda.urls')),    
+    path('api/', include('rest_subscriptor.urls')),
+    # path('api/', include('rest_tienda.urls')),    
 ]
 
 if settings.DEBUG:

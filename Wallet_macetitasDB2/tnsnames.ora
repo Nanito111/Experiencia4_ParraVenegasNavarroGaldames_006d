@@ -1,0 +1,8 @@
+macetitasdb2_high = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-santiago-1.oraclecloud.com))(connect_data=(service_name=g3fe9e0e9ee6545_macetitasdb2_high.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.sa-santiago-1.oraclecloud.com, O=Oracle Corporation, L=Redwood City, ST=California, C=US")))
+
+macetitasdb2_low = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-santiago-1.oraclecloud.com))(connect_data=(service_name=g3fe9e0e9ee6545_macetitasdb2_low.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.sa-santiago-1.oraclecloud.com, O=Oracle Corporation, L=Redwood City, ST=California, C=US")))
+
+macetitasdb2_medium = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-santiago-1.oraclecloud.com))(connect_data=(service_name=g3fe9e0e9ee6545_macetitasdb2_medium.adb.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.sa-santiago-1.oraclecloud.com, O=Oracle Corporation, L=Redwood City, ST=California, C=US")))
+
+
+

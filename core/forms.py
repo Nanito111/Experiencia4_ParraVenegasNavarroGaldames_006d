@@ -2,6 +2,8 @@ from django import forms
 from .models import *
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
 from django.contrib.auth import authenticate, login as login_auth
+from creditcards.forms import CardNumberField, CardExpiryField, SecurityCodeField
+from creditcards.widgets import ExpiryDateWidget, TelephoneInput
 from django.contrib.auth.models import User    
 
 class UserChangeForm(forms.ModelForm):
@@ -129,22 +131,54 @@ class RemoveForm(forms.ModelForm):
         fields = ('username',)
 
 class BoletaForm(forms.ModelForm):
-    nombre = forms.CharField(max_length=50, label="Nombre", widget = forms.TextInput(
-        attrs = {'class': 'form-control',
-                 'id': 'name'}))
-    correo = forms.CharField(max_length=100, label="Correo electrónico", widget = forms.EmailInput(
-        attrs = {'class': 'form-control',
-                 'id': 'email'}))
-    telefono = forms.CharField(max_length=12, label="Telefono", widget = forms.NumberInput(
-        attrs = {'class': 'form-control',
-                 'placeholder': '569123456789',
-                 'id': 'number'}))
-    unidades = forms.IntegerField(label="unidades", widget = forms.NumberInput(
-            attrs = {'class': 'form-control',
-                    'id': 'number'}))
+    boleta = forms.CharField()
+    cliente = forms.IntegerField()
+    estado = forms.CharField() 
+    
     class Meta:
         model = Boleta
         fields = '__all__'
-        exclude = ('id', 'id_producto', 'id_cliente', 'cantidad', 'precio', 'estado')
+
+class BoletaProductoForm(forms.ModelForm):
+    boleta = forms.CharField()
+    producto = forms.IntegerField()
+    cantidad = forms.IntegerField() 
+    
+    class Meta:
+        model = BoletaProducto
+        fields = '__all__'
 
 
+class PaymentForm(forms.Form):
+    class Meta:
+        model = Subscripcion
+
+    cc_number = CardNumberField(label='Card Number', widget= TelephoneInput( 
+        attrs= {'pattern': r'[-\d\s]*',
+                'autocomplete': 'cc-number',
+                'autocorrect': 'off',
+                'spellcheck': 'off',
+                'autocapitalize': 'off',
+                'class':'form-control'}))
+    # cc_number = CardNumberField(label='Card Number')
+            
+    cc_expiry = CardExpiryField(label='Expiration Date', widget= ExpiryDateWidget( 
+        attrs= {'pattern': r'\d+/\d+',
+                'placeholder': 'MM/YY',
+                'autocomplete': 'cc-exp',
+                'autocorrect': 'off',
+                'spellcheck': 'off',
+                'autocapitalize': 'off',
+                'class':'form-control w-25'}))
+    cc_code = SecurityCodeField(label='CVV/CVC', widget= TelephoneInput( 
+        attrs= {'pattern': r'\d*',
+                'autocomplete': 'cc-csc',
+                'autocorrect': 'off',
+                'spellcheck': 'off',
+                'autocapitalize': 'off',
+                'class': 'form-control w-25'}))
+
+class SubscripcionForm(forms.ModelForm):
+    class Meta:
+        model = Subscripcion
+        fields = '__all__'
