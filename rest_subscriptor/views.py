@@ -22,6 +22,12 @@ def lista_subscriptores(request):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
+        try:
+            Subscripcion.objects.get(id_cliente=request.user)
+            request.session['descuento'] = request.session['descuento'] - 5
+        except:
+            request.session['descuento'] = request.session['descuento']
+            
         subscrip = Subscripcion.objects.all()
         subscrip.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -33,6 +39,11 @@ def eliminar_subscriptores(request, id):
     except Subscripcion.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     if request.method == 'DELETE':
+        try:
+            Subscripcion.objects.get(id_cliente=request.user)
+            request.session['descuento'] = request.session['descuento'] - 5
+        except:
+            request.session['descuento'] = request.session['descuento']
         sub.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
