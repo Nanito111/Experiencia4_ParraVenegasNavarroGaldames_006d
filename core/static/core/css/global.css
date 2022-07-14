@@ -253,7 +253,7 @@ footer a:hover{
 
 p.agotado{
     position: absolute;
-    top: 40%;
+    top: 3em;
     left: 50%;
     color: rgb(110, 0, 0);
     transform: translate(-50%,-50%);
